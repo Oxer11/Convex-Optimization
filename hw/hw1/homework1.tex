@@ -1,0 +1,352 @@
+\documentclass{article}
+
+\usepackage[left=1.25in,top=1.25in,right=1.25in,bottom=1.25in,head=1.25in]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{verbatim,float,url,enumerate}
+\usepackage{graphicx,subfigure,psfrag}
+\usepackage{natbib}
+
+\newtheorem{algorithm}{Algorithm}
+\newtheorem{theorem}{Theorem}
+\newtheorem{lemma}{Lemma}
+\newtheorem{corollary}{Corollary}
+
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+\newcommand{\argmin}{\mathop{\mathrm{argmin}}}
+\newcommand{\argmax}{\mathop{\mathrm{argmax}}}
+\newcommand{\minimize}{\mathop{\mathrm{minimize}}}
+\newcommand{\maximize}{\mathop{\mathrm{maximize}}}
+\newcommand{\st}{\mathop{\mathrm{subject\,\,to}}}
+\newcommand{\dist}{\mathop{\mathrm{dist}}}
+
+\def\R{\mathbb{R}}
+\def\E{\mathbb{E}}
+\def\P{\mathbb{P}}
+\def\S{\mathbb{S}}
+\def\Cov{\mathrm{Cov}}
+\def\Var{\mathrm{Var}}
+\def\half{\frac{1}{2}}
+\def\sign{\mathrm{sign}}
+\def\supp{\mathrm{supp}}
+\def\th{\mathrm{th}}
+\def\tr{\mathrm{tr}}
+\def\dim{\mathrm{dim}}
+\def\dom{\mathrm{dom}}
+
+\begin{document}
+
+\title{Homework 1}
+\author{\Large Convex Optimization 10-725}
+\date{{\bf Due Friday September 14 at 11:59pm.} \\
+\bigskip
+Submit your work as a single PDF on Gradescope. Make sure to prepare your
+solution to each problem on a separate page. (Gradescope will ask you select the
+pages which contain the solution to each problem.) \\  
+\bigskip 
+Total: 75 points}
+\maketitle
+
+\section{Convex sets (18 points)}
+
+\noindent
+(a, 8 pts) Closed and convex sets. 
+
+\begin{enumerate}[i.]
+\item Show that If $S\subseteq \R^n$ is convex, and $A \in \R^{m \times n}$,
+  then $A(S) = \{ Ax : x \in S \}$, called the image of $S$ under $A$, is
+  convex.  
+
+\item Show that if $S\subseteq \R^m$ is convex, and $A \in \R^{m \times n}$,
+  then $A^{-1}(S) = \{ x : Ax \in S \}$, called the preimage of $S$ under $A$,
+  is convex.  
+
+\item Show that (ii) also holds if we replace ``convex'' by ``closed''.
+
+\item Show that (i) does not hold if we replace ``convex'' by ``closed'', i.e.,
+  give a counterexample.
+\end{enumerate}
+
+\bigskip
+\noindent
+(b, 4 pts) Polyhedra.
+
+\begin{enumerate}[i.]
+
+\item Show that any polyhedron is both closed and convex.
+
+\item Show that if $P \subseteq \R^n$ is a polyhedron, and $A \in \R^{m \times
+    n}$, then $A(P)$ is a polyhedron. Hint: you may use the fact that 
+$$
+\text{$P \subseteq \R^{m+n}$ is a polyhedron} 
+\; \Rightarrow \;
+\text{$\{x\in \R^n : \text{$(x,y)\in P$ for some $y\in\R^m$}\}$ 
+is a polyhedron}.
+$$
+\end{enumerate}
+
+\noindent
+{\bf Bonus.} Show that if $P \subseteq \R^n$ is a polyhedron, and $A \in \R^{m
+  \times n}$, then $A^{-1}(P)$ is a polyhedron.  
+
+\bigskip
+\noindent
+(c, 2 pts) Given some integer $k \geq 0$, the {\it Fantope} of order $k$ is   
+$$
+\{ Z \in \S^n : 0 \preceq Z \preceq I, \; \tr(Z)=k \}.
+$$
+You can think of this like a ``polyhedron in matrix land''.  Prove that it
+is convex, in one of two ways: (i) straight from the definition of convexity;
+or (ii) by recognizing that it is the convex hull of another set.  
+
+\bigskip
+\noindent
+(d, 4 pts) The following is a ``strict'' variant of the Separating
+Hyperplane Theorem: if $C,D \subseteq \R^n$ are disjoint, closed
+and convex, and (say) $D$ is bounded, then there exists $a \in
+\R^n, b \in \R$ with $a\not=0$ such that $a^T x > b$ for all $x \in C$
+and $a^T x < b$ for all $x \in D$ (i.e., the hyperplane $\{x \in
+\R^n: a^T x = b\}$ strictly separates $C,D$).  Use this to prove   
+{\it Farkas' Lemma}: 
+given $A \in \R^{m \times n}$, $b \in \R^m$, exactly one of the following is
+true: 
+\begin{itemize}
+\item there exists $x\in \R^n$ such that $Ax=b$, $x \geq 0$;
+\item there exists $y\in \R^m$ such that $A^Ty \geq 0$, $y^Tb < 0$.  
+\end{itemize}
+Hint: it will help you to use part (b.ii), to deduce that the set
+$\{Ax : x \geq 0\}$ is a polyhedron, and hence closed and convex by
+part (b.i).
+
+\section{Convex functions (14 points)}
+
+\noindent
+(a, 2 pts) Prove that the function $f : \R^n \to \R$, defined by
+$$
+f(x) = \min_\sigma \; \sum_{i=1}^{n-1} |x_{\sigma(i)} - x_{\sigma(i+1)}|,
+$$
+where the minimum above is over all permutations $\sigma$ of the set
+$\{1,\ldots,n\}$, is convex. Hint: you can rewrite this function in a much
+simpler form. 
+
+\bigskip
+\noindent
+(b, 2 pts) Prove that the {\it log barrier function} $f:\R^n_{++} \to \R$,
+defined as 
+$$
+f(x) = -\sum_{i=1}^n \log(x_i),
+$$
+is strictly convex.
+
+\bigskip
+\noindent
+(c, 4 pts) Let $f$ be twice differentiable, with $\mathrm{dom}(f)$ convex.  Prove
+that $f$ is convex if and only if  
+$$
+(\nabla f(x) - \nabla f(y))^T (x-y) \geq 0,
+$$
+for all $x,y$.  This property is called {\it monotonicity} of the
+gradient $\nabla f$.  
+
+\bigskip
+\noindent
+(d, 2 pts) Give an example of a strictly convex function that does not attain 
+its infimum.
+
+\bigskip
+\noindent
+(e, 2 pts) A function $f : \R^n \to \R$ is said to be {\it coercive} provided
+that $f(x) \to \infty$ as $\|x\|_2 \to \infty$.  A key fact about coercive
+functions is that they attain their infimums.  Prove that a twice
+differentiable, strongly convex function is coercive and hence attains its
+infimum. Hint: use Q3 part (b.iv).  
+
+\bigskip
+\noindent
+(f, 2 pts) Let $f : \R^n \to \R$ be a function. Its {\it perspective
+transform} $g : \R^{n+1} \to \R$ is defined by
+$$
+g(x,t) = t f(x/t),
+$$
+with domain $\dom(g)=\{(x,t) \in \R^{n+1} : x \in \dom(f), \; t > 0\}$.
+Prove that if $f$ is convex, then so is its perspective transform $g$, in one of
+two ways: (i) straight from the definition of convexity; or (ii) by following the
+proof in Section 3.2.6 in Boyd and Vandenberghe, explaining each step
+appropriately. 
+
+% \bigskip
+% \noindent
+% {\bf Bonus.} Let $\varphi: [0,1] \to \R_+$ be a concave function, e.g., you can 
+% take $\varphi$ to be the {\it Gini index}
+% $$
+% \varphi(p) = p(1-p).
+% $$  
+% Let $(x_i,y_i) \in C \times \{0,1\}$, where $C$ is an arbitrary discrete set,
+% e.g., take $C=\{1,\ldots,k\}$ for concreteness.  Given any subset of indices
+% $I \subseteq \{1,\ldots,n\}$, define
+% $$
+% p_I = \frac{1}{n} \sum_{i \in I} y_i,
+% $$
+% i.e., the proportion class 1s among points in $I$, and similarly define   
+% $p_{I^c}$, where $I^c=\{1,\ldots,n\} \setminus I$ is the complement of
+% $I$. Further define   
+% $$
+% f(I) = \varphi(p_I) |I|/n + \varphi(p_{I^c}) (1-|I|/n),
+% $$
+% which we call the {\it diversity} associated with $I$.  Prove that $f$ is
+% minimized at a subset $I$ of the form   
+% $$
+% I = \bigcup_{j \in S} \{i : x_i = j\},
+% $$
+% for some $S \subseteq C$.  
+
+% \smallskip\smallskip
+% \noindent
+% Hint: properly reparametrized, it turns out that you can view the function $f$
+% above as a function of a real-valued variable on $[0,1]$, and apply part (f)
+% above to conclude that it is concave. 
+
+% Note: this question is meant to reflect on the choices made by a greedy decision
+% tree algorithm like CART applied to a classification problem with categorical
+% features, which recursively splits the feature space according to the split that
+% minimizes the diversity.  You're proving what seems to be an obvious and 
+% natural fact about CART, which is that it would never split a category into 
+% fractions. 
+
+\section{Lipschitz gradients and strong convexity (16 points)}
+
+Let $f$ be convex and twice continuously differentiable.
+
+\bigskip
+\noindent
+(a, 8 pts) Show that the following statements are equivalent.
+\begin{enumerate}[i.]
+\item $\nabla f$ is Lipschitz with constant $L$;
+\item $(\nabla f(x) - \nabla f(y))^T(x-y) \leq L \|x-y\|_2^2$ for all
+  $x,y$; 
+\item $\nabla^2 f(x) \preceq LI$ for all $x$;
+\item $f(y) \leq f(x) + \nabla f(x)^T (y-x) + \frac{L}{2} \|y-x\|_2^2$
+  for all $x,y$.
+\end{enumerate}
+
+\bigskip
+\noindent
+(b, 8 pts) Show that the following statements are equivalent.
+\begin{enumerate}[i.]
+\item $f$ is strongly convex with constant $m$;
+\item $(\nabla f(x) - \nabla f(y))^T(x-y) \geq m \|x-y\|_2^2$ for all
+  $x,y$;
+\item $\nabla^2 f(x) \succeq mI$ for all $x$;
+\item $f(y) \geq f(x) + \nabla f(x)^T (y-x) + \frac{m}{2}
+  \|y-x\|_2^2$ for all $x,y$.
+\end{enumerate}
+
+\section{Solving optimization problems with CVX (27 points)}
+
+CVX is a fantastic framework for disciplined convex programming---it's rarely
+the fastest tool for the job, but it's widely applicable, and so it's a great
+tool to be comfortable with. In this exercise we will set up the CVX
+environment and solve a convex optimization problem.
+
+Generally speaking, for homeworks in this class, your solution to
+programming-based problems should include plots and whatever explanation
+necessary to answer the questions asked. In addition, you full code should be  
+submitted as an appendix to the homework document.
+
+CVX variants are available for each of the major numerical programming
+languages. There are some minor syntactic and functional differences between the
+variants but all provide essentially the same functionality. 
+
+Download the CVX variant of your choosing:
+\begin{itemize}
+\item Matlab - \url{http://cvxr.com/cvx/}
+\item Python - \url{http://www.cvxpy.org/}
+\item R - \url{https://cvxr.rbind.io}
+\item Julia - \url{https://github.com/JuliaOpt/Convex.jl}
+\end{itemize}
+and consult the documentation to understand the basic functionality. Make sure
+that you can solve the least squares problem $\min_\theta \;
+\|y-X\theta\|_2^2$ for a vector $y$ and matrix $X$. Check your answer
+by comparing with the closed-form solution $(X^T X)^{-1} X^T y$.
+
+\bigskip
+\noindent
+(a) Using CVX, we will solve the 2d lasso problem and its variants:
+$$ \min_{\theta\in\mathbb{R}^{mn}} \; \frac{1}{2} \sum_{i=1}^{mn} (y_i- \theta_i)^2 +
+\lambda \sum_{(i,j)\in E}\left|\theta_i-\theta_j\right|.$$
+The set $E$ is the set of all undirected edges connecting horizontally or
+vertically neighboring pixels in the image. More specifically, $(i,j) \in E$
+if and only if pixel $i$ is the immediate neighbor of pixel $j$ on the left,
+right, above or below. 
+
+\begin{enumerate}
+\item (5 pts) Load the basic test data from \texttt{toy.csv} and solve the 2d lasso problems
+with $\lambda = 1$. Report the objective value obtained at the solution and plot
+the solution and original data as images. Why does the shape change its form?
+
+\item (5 pts) Another way to formulate the 2d lasso problem is as follows:
+$$ \min_{\theta\in\mathbb{R}^{m\times n}} \; \frac{1}{2} \sum_{a=1}^m\sum_{b=1}^n(y_{a,b} - \theta_{a,b})^2 +
+\lambda \sum_{a=1}^{m-1}\sum_{b=1}^{n-1}\left\|\begin{pmatrix}\theta_{a,b}-\theta_{a+1,b}\\ \theta_{a,b}-\theta_{a,b+1}\end{pmatrix}\right\|_p.$$
+Note that the index $a,b$ here refers to the coordinates of pixel $i$.
+When taking a $1$-norm ($p=1$), the formulation reduces to the 2d fused lasso mentioned above, 
+and the latter term is called an ``anisotropic'' total variation penalty.
+When taking a $2$-norm ($p=2$), the term is called an ``isotropic'' total variation penalty.
+
+Solve the ``isotropic'' 2d lasso problems with $\lambda = 1$ on \texttt{toy.csv}.
+Report the objective value obtained at the solution and plot
+the solution and original data as images.  Informally speaking, why is the output different from the ``anisotropic'' penalty, and what's the difference?
+
+Hint: For \texttt{cvxpy} users, the \texttt{diff} function, the \texttt{hstack} function, and the axis option in the \texttt{norm} function would be useful.
+For Matlab \texttt{CVX} users, there is a \texttt{norms(x,p,dim)} function that can compute the norm along different dimensions.
+
+\item (7 pts) Next, we consider how the solution changes as we vary $\lambda$. Load a grayscale $64 \times 64$ pixel image from \texttt{baboon.csv} and solve the isotropic and anisotropic 
+2d lasso problem for this image for $\lambda \in \{ 10^{-k/4} \, : \,
+        k=0, 1, \dots, 8 \}$.  For each $\lambda$, report the value of the
+        optimal objective value, plot the optimal image and show a histogram of
+        the pixel values ($100$ bins between values $0$ and $1$). 
+        What change in the histograms can you observe with varying $\lambda$ for the isotropic and anisotropic penalties?
+\end{enumerate}
+
+\bigskip
+\noindent
+(b, 10 pts) Disciplined convex programming (DCP) is a system for composing
+functions while ensuring their convexity. It is the language that
+underlies CVX.
+Essentially, each node in the parse tree for a convex
+expression is tagged with attributes for curvature (convex, concave, affine,
+constant) and sign (positive, negative) allowing for reasoning about the
+convexity of entire expressions. The website \url{http://dcp.stanford.edu/}
+provides visualization and analysis of simple expressions.
+
+Typically, writing problems in the DCP form is natural, but in some cases
+manipulation is required to construct expressions that satisfy the
+rules. For each set of mathematical expressions below, first briefly explain why each defines a convex set. Then, give an equivalent DCP expression along with a brief explanation of why the DCP expression is equivalent to the original for each set. DCP expressions should be given in a form that passes analysis (a green tick on the left of the expression box) at \url{http://dcp.stanford.edu/analyzer}.
+
+Note: this question is really about developing a better understanding of
+the various composition rules for convex functions.
+
+\begin{enumerate}
+	\item $\frac{1}{x-y} + \frac{1}{(x+y)^2} \le z$, $x>|y|$
+	\item $x^2 + \frac{2}{\log^2y} \le 5z^{\frac{1}{4}}$, $y > 1$, $z \ge 0$
+	\item $2x^2 - 2xy + 5y^2 = 0$
+	\item $(x^2 + 4y^2 + 1)^{3/2} \le 7x + y$
+	\item $2xyz \ge yz + 8$, $x \ge \frac{1}{2}$, $y \ge 0$, $z \ge 0$
+	\item $x\exp\left({\frac{y}{x}}\right) \le z$, $x > 0$, $z > 0$
+	\item $z^2 \le 4xy$ 
+	\item $\frac{(x+y)^4}{\sqrt{z}} \le 2x + y$, $z > 0$
+	\item $\max^2(x,2) + |y|^2 - z^2\le 0$
+	\item $\log \left( e^{-\sqrt{x}} + \left(1 + \frac{y}{z}\right)^y \right) \le -\exp(-z)$, $x \ge 0$, $y > 0$, $z > 0$
+\end{enumerate}
+
+{\bf Bonus.} Is the function $f(x) = \log \left( \alpha + \sum_{i=1}^{n} \frac{\beta_i}{x_i} \right) + \lambda \|x\|_2$, where $\alpha \ge 0$, $\beta >0$, $\lambda > 0$, convex on $\R^n_{++}$? Is it possible to express this into an equivalent DCP expression? Now, consider the following optimization problem:
+	\begin{equation*}
+	\begin{array}{ll}
+	\mbox{minimize}   &  \log \left( \alpha + \sum_{i=1}^{n} \frac{\beta_i}{x_i} \right) + \lambda \|x\|_2 \\
+	\mbox{subject to} &  \sum_{i=1}^{n} x_i \le 1
+	\end{array}
+	\end{equation*}
+	where $x \in \R^n_{++}$ is the optimization variable, and $\alpha \ge 0$, $\beta > 0$, and $\lambda > 0$ are fixed problem parameters. Can you use CVX to solve the above problem for given $\alpha$, $\beta$, and $\lambda$?
+\end{document}
