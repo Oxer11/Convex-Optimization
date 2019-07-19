@@ -1,5 +1,6 @@
-using CSV, Images, Plots, ImageView
+using CSV, Images, ImageView
 using Convex, SCS
+
 
 function read_image(filename :: String)
     image = CSV.read(filename;header=false)
@@ -29,12 +30,29 @@ end
 
 toy = read_image("../toy.csv")
 img = Gray.(toy)
-println("Displaying the original image.")
 imshow(img)
 
+# Problem 1
 opt1, img1 = lasso(toy, 1, 1)
 println(opt1)
-histogram(reshape(img1, length(img1), 1), bins=range(0, 1, length=100))
-println("Displaying the solution image.")
 imshow(Gray.(img1))
 
+# Problem 2
+opt2, img2 = lasso(toy, 1, 2)
+println(opt2)
+imshow(Gray.(img2))
+
+# Problem 3
+baboon = read_image("../baboon.csv")
+img = Gray.(baboon)
+imshow(img)
+
+Θ = []
+for p in 1:2
+    for λ in 0:8
+        opt, img = lasso(baboon, 10^(-λ/4), p)
+        push!(Θ, (opt, img))
+        println("For $p-norm lasso problem with λ=$(10^(-λ/4)), the optimal value is $opt and the solution image is shown above.")
+        imshow(Gray.(img))
+    end
+end

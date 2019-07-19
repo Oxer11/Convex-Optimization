@@ -258,8 +258,147 @@
 			It can be recognized that the solution image for 2-norm lasso looks like a circle more. In spite of this, it still has a darker background compared with the original image due to the penalty term.
 		
 			\item
+			\begin{figure}[htbp]
+				\centering
+				\includegraphics{fig/baboon.png}
+				\label{fig:baboon}
+				\caption{Original Images in baboon.csv}
+			\end{figure}
+			\begin{figure}[htbp]
+				\centering
+				\subfigure[$\lambda=1,k=0,\text{opt}=36.6$]{
+					\begin{minipage}[t]{0.25\linewidth}
+						\centering
+						\includegraphics{fig/output70.png}
+					\end{minipage}%
+				}%
+				\subfigure[$\lambda=1,k=1,\text{opt}=34.7$]{
+					\begin{minipage}[t]{0.25\linewidth}
+						\centering
+						\includegraphics{fig/output72.png}
+					\end{minipage}%
+				}%
+				\subfigure[$\lambda=1,k=2,\text{opt}=29.2$]{
+					\begin{minipage}[t]{0.25\linewidth}
+						\centering
+						\includegraphics{fig/output74.png}
+					\end{minipage}%
+				}
+				\subfigure[$\lambda=1,k=3,\text{opt}=22.6$]{
+					\begin{minipage}[t]{0.25\linewidth}
+						\centering
+						\includegraphics{fig/output76.png}
+					\end{minipage}%
+				}%
+				\subfigure[$\lambda=1,k=4,\text{opt}=16.7$]{
+					\begin{minipage}[t]{0.25\linewidth}
+						\centering
+						\includegraphics{fig/output78.png}
+					\end{minipage}%
+				}%
+				\subfigure[$\lambda=1,k=5,\text{opt}=36.6$]{
+					\begin{minipage}[t]{0.25\linewidth}
+						\centering
+						\includegraphics{fig/output710.png}
+					\end{minipage}%
+				}
+				\subfigure[$\lambda=1,k=6,\text{opt}=11.9$]{
+					\begin{minipage}[t]{0.25\linewidth}
+						\centering
+						\includegraphics{fig/output712.png}
+					\end{minipage}%
+				}%
+				\subfigure[$\lambda=1,k=7,\text{opt}=8.20$]{
+					\begin{minipage}[t]{0.25\linewidth}
+						\centering
+						\includegraphics{fig/output714.png}
+					\end{minipage}%
+				}%
+				\subfigure[$\lambda=1,k=8,\text{opt}=3.45$]{
+					\begin{minipage}[t]{0.25\linewidth}
+						\centering
+						\includegraphics{fig/output716.png}
+					\end{minipage}%
+				}
+			\centering
+			\caption{Images for Problem (a, 3)}
+			\label{fig:4a31}
+		\end{figure}
+		\begin{figure}[htbp]
+				\centering
+				\subfigure[$\lambda=2,k=0,\text{opt}=36.4$]{
+					\begin{minipage}[t]{0.25\linewidth}
+						\centering
+						\includegraphics{fig/output718.png}
+					\end{minipage}%
+				}%
+				\subfigure[$\lambda=2,k=1,\text{opt}=33.8$]{
+					\begin{minipage}[t]{0.25\linewidth}
+						\centering
+						\includegraphics{fig/output721.png}
+					\end{minipage}%
+				}%
+				\subfigure[$\lambda=2,k=2,\text{opt}=27.7$]{
+					\begin{minipage}[t]{0.25\linewidth}
+						\centering
+						\includegraphics{fig/output724.png}
+					\end{minipage}%
+				}
+				\subfigure[$\lambda=2,k=3,\text{opt}=21.1$]{
+					\begin{minipage}[t]{0.25\linewidth}
+						\centering
+						\includegraphics{fig/output727.png}
+					\end{minipage}%
+				}%
+				\subfigure[$\lambda=2,k=4,\text{opt}=15.3$]{
+					\begin{minipage}[t]{0.25\linewidth}
+						\centering
+						\includegraphics{fig/output730.png}
+					\end{minipage}%
+				}%
+				\subfigure[$\lambda=2,k=5,\text{opt}=10.8$]{
+					\begin{minipage}[t]{0.25\linewidth}
+						\centering
+						\includegraphics{fig/output732.png}
+					\end{minipage}%
+				}
+				\subfigure[$\lambda=2,k=6,\text{opt}=7.26$]{
+					\begin{minipage}[t]{0.25\linewidth}
+						\centering
+						\includegraphics{fig/output734.png}
+					\end{minipage}%
+				}%
+				\subfigure[$\lambda=2,k=7,\text{opt}=4.69$]{
+					\begin{minipage}[t]{0.25\linewidth}
+						\centering
+						\includegraphics{fig/output736.png}
+					\end{minipage}%
+				}%
+				\subfigure[$\lambda=2,k=8,\text{opt}=2.91$]{
+					\begin{minipage}[t]{0.25\linewidth}
+						\centering
+						\includegraphics{fig/output738.png}
+					\end{minipage}%
+				}
+				\centering
+				\caption{Images for Problem (a, 3)}
+				\label{fig:4a32}
+			\end{figure}
 		\end{enumerate} 
 		\item
+		\begin{enumerate}[1.]
+			\item 
+			Since $x>|y|$, we have $\frac{1}{x-y}>0$. So $\frac{1}{x-y}$ and $\frac{1}{(x+y)^2}$ are both convex. Combining with an affine function $z$, these inequalities define a convex set. And this problem is equivalent to the following one:
+			\begin{align*}
+			\frac{1}{a}+\frac{1}{b^2}-z\le 0,\; a> 0,\;b> 0.
+			\end{align*}
+			Here, we let $a=x-y$ and $b=x+y$. Since $x>|y|$, we have $a=x-y>0$ and $b=x+y>0$. Thus, the two problems are equivalent.
+			\item Here, let $y'=\log y$ and $z'=z^{1/4}$, we will obtain
+			\begin{equation*}
+			x^2+2e^{-2y'}-5z'\le 0,\; y'>0,\; z'\ge 0.
+			\end{equation*}
+			Since $x^2$, $e^{-2y'}$ and $-5z'$ are 
+		\end{enumerate}
 	\end{enumerate}
 
 	{\bf Bonus.}
